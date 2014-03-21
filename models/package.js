@@ -90,6 +90,7 @@ function package (params, cb) {
         data.readmeSrc = null
       }
       data.fromNow = moment(t).fromNow()
+      data._npmUser = data.versions[v]._npmUser || null
 
       setLicense(data, v)
     }
@@ -134,9 +135,12 @@ function parseReadme (data) {
 
 function gravatarPeople (data) {
   gravatarPerson(data.author)
+
+  if (data._npmUser) gravatarPerson(data._npmUser)
+
   if (data.maintainers) data.maintainers.forEach(function (m) {
     gravatarPerson(m)
-  })
+  })  
   if (Array.isArray(data.contributors)) {
     data.contributors.forEach(function (m) {
       gravatarPerson(m)

@@ -47,6 +47,16 @@ function packagePage (req, res) {
         return res.error(404)
       }
 
+      // check if publisher is in maintainers list
+      p.hasPub = false
+      if (p.maintainers && p._npmUser) {
+        for (var i = 0; i < p.maintainers.length; i++) {
+          if (p.maintainers[i].name === p._npmUser.name) {
+            p.hasPub = true
+          }
+        }
+      }
+
       var locals = {
         package: p,
         profile: profileModel.profile,

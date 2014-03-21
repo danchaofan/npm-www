@@ -29,7 +29,20 @@
     <% } %>
 
     <table class="metadata">
-      <% if (package.maintainers) { %>
+      <% if (package._npmUser) { %>
+      <tr>
+        <th>Last Published By</th>
+        <td>
+          <div class="user">
+          <a class="username" href="/~<%= package._npmUser %>"><%
+            if (package._npmUser.avatar) {
+            %><img src="<%= package._npmUser.avatar %>" class="avatar">
+            <% } %><%= package._npmUser.name %></a>
+          </div>
+        </td>
+      </tr>
+      <% } %>
+      <% if (package.maintainers && (!package._npmUser || (package.hasPub && package.maintainers.length > 1))) { %>
       <tr>
         <th>Maintainers</th>
         <td>
